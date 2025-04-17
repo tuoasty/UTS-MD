@@ -22,7 +22,6 @@ st.write("Enter applicant details to predict loan approval.")
 
 st.header("Applicant Information")
 
-# Options for categorical inputs
 gender_options = ["Male", "Female"]
 education_options = ["Master", "HighSchool", "Bachelor", "Associate", "Doctorate"]
 home_ownership_options = ["Rent", "Own", "Mortgage", "Other"]
@@ -34,18 +33,18 @@ with st.form("loan_form"):
 
     with col1:
         gender = st.selectbox("Gender", gender_options)
-        age = st.slider("Age", 18, 80, 18)
+        age = st.slider("Age", 18, 80, 22)
         education = st.selectbox("Education Level", education_options)
-        income = st.number_input("Annual Income ($)", min_value=0)
+        income = st.number_input("Annual Income ($)", min_value=0, value=0)
 
     with col2:
         employment_exp = st.number_input("Employment Experience (years)", min_value=0, value=0)
         home_ownership = st.selectbox("Home Ownership", home_ownership_options)
-        loan_amount = st.number_input("Loan Amount ($)", min_value=1000)
+        loan_amount = st.number_input("Loan Amount ($)", min_value=1000, value=100)
         loan_intent = st.selectbox("Loan Purpose", loan_intent_options)
 
     with col3:
-        loan_interest = st.slider("Loan Interest Rate (%)", 0.0, 30.0, 0)
+        loan_interest = st.slider("Loan Interest Rate (%)", 0.0, 30.0, 0.0)
         credit_length = st.slider("Credit History Length", 0, 50, 0)
         credit_score = st.slider("Credit Score", 300, 850, 300)
         previous_defaults = st.selectbox("Previous Loan Defaults", default_history_options)
