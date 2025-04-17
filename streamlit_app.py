@@ -40,7 +40,7 @@ with st.form("loan_form"):
     with col2:
         employment_exp = st.number_input("Employment Experience (years)", min_value=0, value=0)
         home_ownership = st.selectbox("Home Ownership", home_ownership_options)
-        loan_amount = st.number_input("Loan Amount ($)", min_value=1000, value=100)
+        loan_amount = st.number_input("Loan Amount ($)", min_value=1000, value=1000)
         loan_intent = st.selectbox("Loan Purpose", loan_intent_options)
 
     with col3:
