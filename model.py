@@ -2,11 +2,11 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score, roc_auc_score
-import xgboost as xgb
+from sklearn.ensemble import RandomForestClassifier
 import pickle
 
 class LoanApprovalModel:
-    def __init__(self, data_path='Dataset_A_loan.csv', model_path='xgboost_model.pkl'):
+    def __init__(self, data_path='Dataset_A_loan.csv', model_path='rf_model.pkl'):
         self.label_encoders = {}
         self.scaler = None
         self.model = None
@@ -33,7 +33,7 @@ class LoanApprovalModel:
 
         x_train = self.preprocess(x_train, is_train=True)
 
-        self.model = xgb.XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42)
+        self.model = RandomForestClassifier(n_estimators=100, random_state=5)
         self.model.fit(x_train, y_train)
 
         self._evaluate_model(x, y)
@@ -41,10 +41,11 @@ class LoanApprovalModel:
         self.save(model_path)
 
     def fix_and_encode(self, df):
+        df.dropna()
         self.categorical_cols = df.select_dtypes(include=['object']).columns
 
         for col in self.categorical_cols:
-            unique_vals = df[col].dropna().unique()
+            unique_vals = df[col].unique()
             print(f"{col}: {unique_vals}")
             gender_mapping = {
                 'female': 'Female',
@@ -124,7 +125,7 @@ class LoanApprovalModel:
         return df
 
     def train(self, x_train, y_train):
-        self.model = xgb.XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42)
+        self.model = RandomForestClassifier(n_estimators=100, random_state=5)
         self.model.fit(x_train, y_train)
 
     def predict(self, x):
